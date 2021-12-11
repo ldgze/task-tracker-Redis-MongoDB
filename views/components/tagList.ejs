@@ -1,0 +1,13 @@
+<h2>Tags:</h2>
+<ul>
+  <% for (let a of tags) { %>
+  <li>
+    <a><%=a.name%></a>
+
+    <a href="<%= '/tasks/' + task._id + '/removeTag/' + a._id%>">❌</a>
+  </li>
+  <% } %>
+</ul>
+
+
+<%- include("../components/formAddTag.ejs", { task }) %>

@@ -1,0 +1,25 @@
+<h2>Tags</h2>
+<div class="row g-3">
+  <% for (let tag of tags) { %>
+
+    <div class="col-4">
+      <div class="card p-1">
+        <h5 class="card-title"><%= tag.name   %></h5>
+        <div class="card-text">
+
+          <div><%= "tag_id: " + tag._id %></div>
+          <div>
+
+            <a class="btn btn-outline-danger" href="<%= '/tags/' + tag._id + '/delete' %>">Delete</a>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+
+  <% } %>
+
+ <%- include("./pagination.ejs", { currentPage, lastPage }) %>
+
+</div>

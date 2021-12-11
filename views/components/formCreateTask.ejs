@@ -1,0 +1,39 @@
+
+<h2>Create a Task</h2>
+<form action="/createTask" method="POST">
+  <div>
+    <label class="form-label">
+      Title:
+      <input class="form-control" type="text" name="title" />
+    </label>
+  </div>
+
+  <div>
+    <label class="form-label">
+      Due Date:
+      <input class="form-control" type="date" name="dueDate" />
+    </label>
+  </div>
+
+ 
+  <div>
+    <label class="form-label">
+      URL:
+      <input class="form-control" type="text" name="URL" />
+    </label>
+  </div>
+
+   <div>
+    <label class="form-group">
+      Priority:
+      <select class="form-control" type="text" name="priority" />
+        <option>low</option>
+        <option>medium</option>
+        <option>hign</option>
+    </select>
+    </label>
+  </div>
+
+
+  <button class="btn btn-primary" type="submit">Create</button>
+</form>

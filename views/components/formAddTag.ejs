@@ -1,0 +1,24 @@
+<h3>Add Tags</h3>
+<form
+  action="<%= '/tasks/' + task._id + '/addTag'  %>"
+  method="POST"
+>
+  <div>
+    <input
+      hidden
+      type="text"
+      class="form-control"
+      name="task_id"
+      value="<%= task._id %>"
+    />
+  </div>
+
+  <div>
+    <label class="form-label">
+      Tag ID:
+      <input type="text" class="form-control" name="tagID" />
+    </label>
+  </div>
+
+  <button type="submit" class="btn btn-outline-primary">Add Tag</button>
+</form>

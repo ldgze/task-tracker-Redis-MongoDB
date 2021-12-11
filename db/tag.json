@@ -1,0 +1,85 @@
+[{
+  "_id": {
+    "$oid": "619efb0636b435bf0941af3b"
+  },
+  "name": "personal",
+  "tagID": 1
+},{
+  "_id": {
+    "$oid": "619efb3836b435bf0941af3c"
+  },
+  "name": "family",
+  "tagID": 2
+},{
+  "_id": {
+    "$oid": "619efb4536b435bf0941af3d"
+  },
+  "name": "work",
+  "tagID": 3
+},{
+  "_id": {
+    "$oid": "619efb5136b435bf0941af3e"
+  },
+  "name": "social",
+  "tagID": 4
+},{
+  "_id": {
+    "$oid": "619efb6436b435bf0941af3f"
+  },
+  "name": "errands",
+  "tagID": 5
+},{
+  "_id": {
+    "$oid": "619efb7236b435bf0941af40"
+  },
+  "name": "dev",
+  "tagID": 6
+},{
+  "_id": {
+    "$oid": "619efb7d36b435bf0941af41"
+  },
+  "name": "design",
+  "tagID": 7
+},{
+  "_id": {
+    "$oid": "619efb8936b435bf0941af42"
+  },
+  "name": "home",
+  "tagID": 8
+},{
+  "_id": {
+    "$oid": "619efb9736b435bf0941af43"
+  },
+  "name": "25%",
+  "tagID": 9
+},{
+  "_id": {
+    "$oid": "619efbdc36b435bf0941af48"
+  },
+  "name": "50%",
+  "tagID": 10
+},{
+  "_id": {
+    "$oid": "619efbe736b435bf0941af49"
+  },
+  "name": "75%",
+  "tagID": 11
+},{
+  "_id": {
+    "$oid": "619efbf836b435bf0941af4b"
+  },
+  "name": "office",
+  "tagID": 12
+},{
+  "_id": {
+    "$oid": "619efbf536b435bf0941af4a"
+  },
+  "name": "house",
+  "tagID": 13
+},{
+  "_id": {
+    "$oid": "619efc3336b435bf0941af4c"
+  },
+  "name": "gym",
+  "tagID": 14
+}]

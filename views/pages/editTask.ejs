@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <%- include("../templates/head.ejs") %>
+  <body>
+
+    <%- include("../templates/navBar.ejs") %>
+
+    <div class="container">
+      <h1>Edit Task</h1>
+
+
+      <% if (msg) { %>
+        <div class="alert alert-primary">
+          <%= msg %>
+        </div>
+      <% } %>
+
+      <%- include("../components/formEditTask.ejs", { task }) %>
+
+      <%- include("../components/tagList.ejs", { tags }) %>
+
+
+    </div>
+
+    <%- include("../templates/footer.ejs") %>
+  </body>
+</html>
