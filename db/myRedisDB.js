@@ -14,7 +14,8 @@ async function getUser(userId) {
   try {
     rclient = await getRConnection();
 
-    const user = await rclient.hGetAll(`${userId}`);
+    const user = await rclient.hGetAll(userId);
+    console.log("user:", userId, user);
     const numberOfAccomplishedTask = await rclient.ZSCORE("users", `${userId}`);
     user.numberOfAccomplishedTask = numberOfAccomplishedTask;
 
@@ -69,7 +70,6 @@ async function insertUser(
       email: email,
     });
 
-    //await rclient.rPush("userslist", key);
     await rclient.ZADD("users", {
       score: `${numberOfAccomplishedTask}`,
       value: key,
@@ -105,31 +105,36 @@ async function insertList(listName, numberOfViews) {
   }
 }
 
-async function updateUser(userID, user) {
+async function updateUser(
+  userID,
+  firstName,
+  lastName,
+  email,
+  numberOfAccomplishedTask
+) {
   let rclient;
 
   try {
     rclient = await getRConnection();
-
-    console.log(
-      "updateUser",
-      user.firstName,
-      user.lastName,
-      user.email,
-      user.numberOfAccomplishedTask
-    );
-
     const key = `user:${userID}`;
 
+    console.log(
+      "insertUser",
+      key,
+      firstName,
+      lastName,
+      email,
+      numberOfAccomplishedTask
+    );
+
     await rclient.hSet(key, {
-      id: userID,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
     });
 
     await rclient.ZADD("users", {
-      score: `${user.numberOfAccomplishedTask}`,
+      score: `${numberOfAccomplishedTask}`,
       value: key,
     });
   } finally {

@@ -259,7 +259,7 @@ router.get("/users/:user_id/edit", async (req, res, next) => {
   const user_id = req.params.user_id;
 
   try {
-    let user = await redisDb.getUser(user_id);
+    let user = await redisDb.getUser(`user:${user_id}`);
 
     console.log("edit user", {
       user,
@@ -277,8 +277,10 @@ router.post("/users/:user_id/edit", async (req, res, next) => {
   const user = req.body;
   const user_id = req.params.user_id;
 
+  console.log("Updated", user_id, user);
+
   try {
-    const updateUser = await redisDb.updateUser(
+    const updatedUser = await redisDb.updateUser(
       user_id,
       user.firstName,
       user.lastName,
@@ -296,6 +298,8 @@ router.post("/users/:user_id/edit", async (req, res, next) => {
 
 router.post("/createUser", async (req, res, next) => {
   const user = req.body;
+
+  console.log("create", user);
 
   try {
     const insertUser = await redisDb.insertUser(
