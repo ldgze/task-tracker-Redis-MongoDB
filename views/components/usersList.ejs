@@ -8,11 +8,17 @@
         <div class="card-text">
           <div><%= "lastName: " + user.lastName %></div>
           <div><%= "email: " + user.email %></div>
-          <div><%= "user_id: " + user._id %></div>
+          <div><%= "id: " + user.id %></div>
+          <div><%= "number of accomplished Tasks: " + user._id %></div>
+
 
           <div>
-            <a class="btn btn-outline-danger" href="<%= '/users/' + user._id + '/delete' %>">Delete</a>
+            <a class="btn btn-outline-primary" href="<%= '/users/' + user.id + '/edit' %>">Edit</a>
+            <a class="btn btn-outline-danger" href="<%= '/users/' + user.id + '/delete' %>">Delete</a>
           </div>
+
+
+
           
         </div>
       </div>
@@ -21,6 +27,6 @@
 
   <% } %>
 
- <%- include("./pagination.ejs", { currentPage, lastPage }) %>
+
 
 </div>

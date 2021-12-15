@@ -1,0 +1,80 @@
+<h2>User</h2>
+
+<form
+  action=" <%= '/users/' + user.id + '/edit' %>"
+  method="POST"
+>
+
+  <div>
+    <label class="form-label">
+      User ID:
+      <input
+        class="form-control"
+        type="text"
+        name="ID"
+        value="<%= user.id %>"
+        disabled
+      />
+    </label>
+  </div>
+  
+  <div>
+    <label class="form-label" value="<%= user.firstName %>">
+      First Name:
+      <input
+        class="form-control"
+        type="text"
+        name="firstName"
+        value="<%= user.firstName %>"
+      />
+    </label>
+  </div>
+
+  <div>
+    <label class="form-label" value="<%= user.lastName %>">
+      Last Name:
+      <input
+        class="form-control"
+        type="text"
+        name="lastName"
+        value="<%= user.lastName %>"
+      />
+    </label>
+  </div>
+
+    <div>
+    <label class="form-label" value="<%= user.email %>">
+      Email:
+      <input
+        class="form-control"
+        type="text"
+        name="email"
+        value="<%= user.email %>"
+      />
+    </label>
+  </div>
+
+  <div>
+    <label class="form-label" value="<%= user.numberOfAccomplishedTask %>">
+      Number of Accomplished tasks:
+      <input
+        class="form-control"
+        type="text"
+        name="numberOfAccomplishedTask"
+        value="<%= user.numberOfAccomplishedTask %>"
+      />
+    </label>
+  </div>
+
+  
+
+   
+
+  <button type="submit" class="btn btn-primary">Update</button>
+  
+  <a
+    class="btn btn-danger"
+    href="<%= '/users/' + user.id + '/delete' %>"
+    >Delete</a
+  >
+</form>

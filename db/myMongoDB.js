@@ -390,7 +390,7 @@ async function insertUser(user) {
 
     return await client.db(DB_NAME).collection("user").insertOne({
       firstName: user.firstName,
-      lastName: user.lasttName,
+      lastName: user.lastName,
       email: user.email,
     });
   } finally {

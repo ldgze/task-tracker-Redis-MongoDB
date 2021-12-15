@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const myDb = require("../db/myMongoDB.js");
+const redisDb = require("../db/myRedisDB.js");
 
 /* GET home page. */
 router.get("/", async function (req, res, next) {
@@ -211,21 +212,11 @@ router.post("/createTag", async (req, res, next) => {
 });
 
 router.get("/users", async (req, res, next) => {
-  const query = req.query.q || "";
-  const page = +req.query.page || 1;
-  const pageSize = +req.query.pageSize || 24;
-  const msg = req.query.msg || null;
   try {
-    let total = await myDb.getUsersCount(query);
-    let users = await myDb.getUsers(query, page, pageSize);
+    let users = await redisDb.getUsers();
     console.log({ users });
-    console.log({ total });
     res.render("./pages/users", {
       users,
-      query,
-      msg,
-      currentPage: page,
-      lastPage: Math.ceil(total / pageSize),
     });
   } catch (err) {
     next(err);
@@ -235,9 +226,29 @@ router.get("/users", async (req, res, next) => {
 router.get("/users/:user_id/delete", async (req, res, next) => {
   const user_id = req.params.user_id;
   try {
-    await myDb.deleteUserByID(user_id);
+    await redisDb.deleteUserByID(user_id);
     res.redirect("/users");
   } catch (err) {
+    next(err);
+  }
+});
+
+router.post("/users/:user_id/edit", async (req, res, next) => {
+  const user = req.body;
+
+  try {
+    const updateUser = await redisDb.updateUser(
+      user.ID,
+      user.firstName,
+      user.lastName,
+      user.email,
+      user.numberOfAccomplishedTask
+    );
+
+    console.log("Inserted", updatedUser);
+    res.redirect("/users/?msg=updated");
+  } catch (err) {
+    console.log("Error updating", err);
     next(err);
   }
 });
@@ -246,7 +257,12 @@ router.post("/createUser", async (req, res, next) => {
   const user = req.body;
 
   try {
-    const insertUser = await myDb.insertUser(user);
+    const insertUser = await redisDb.insertUser(
+      user.firstName,
+      user.lastName,
+      user.email,
+      user.numberOfAccomplishedTask
+    );
 
     console.log("Inserted", insertUser);
     res.redirect("/users/?msg=Inserted");
