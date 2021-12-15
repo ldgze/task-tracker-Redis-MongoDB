@@ -59,7 +59,7 @@
       Number of Accomplished tasks:
       <input
         class="form-control"
-        type="text"
+        type="number"
         name="numberOfAccomplishedTask"
         value="<%= user.numberOfAccomplishedTask %>"
       />
@@ -72,9 +72,5 @@
 
   <button type="submit" class="btn btn-primary">Update</button>
   
-  <a
-    class="btn btn-danger"
-    href="<%= '/users/' + user.id + '/delete' %>"
-    >Delete</a
-  >
+ 
 </form>

@@ -255,14 +255,38 @@ router.get("/lists/:list_id/delete", async (req, res, next) => {
   }
 });
 
+router.get("/users/:user_id/edit", async (req, res, next) => {
+  const user_id = req.params.user_id;
+
+  try {
+    let user = await redisDb.getUser(user_id);
+
+    console.log("edit user", {
+      user,
+    });
+
+    res.render("./pages/editUser", {
+      user,
+    });
+  } catch (err) {
+    next(err);
+  }
+});
+
 router.post("/users/:user_id/edit", async (req, res, next) => {
   const user = req.body;
   const user_id = req.params.user_id;
 
   try {
-    const updateUser = await redisDb.updateUser(user_id, user);
+    const updateUser = await redisDb.updateUser(
+      user_id,
+      user.firstName,
+      user.lastName,
+      user.email,
+      user.numberOfAccomplishedTask
+    );
 
-    console.log("Inserted", updatedUser);
+    console.log("Updated", updatedUser);
     res.redirect("/users/?msg=updated");
   } catch (err) {
     console.log("Error updating", err);

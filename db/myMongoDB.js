@@ -312,92 +312,6 @@ async function insertTag(tag) {
   }
 }
 
-async function getUsers(query, page, pageSize) {
-  console.log("getUsers", query);
-
-  const client = new MongoClient(uri);
-
-  try {
-    await client.connect();
-
-    const queryObj = {
-      $or: [
-        { firstName: { $regex: `^${query}`, $options: "i" } },
-        { lastName: { $regex: `^${query}`, $options: "i" } },
-        { email: { $regex: `^${query}`, $options: "i" } },
-      ],
-    };
-
-    return await client
-      .db(DB_NAME)
-      .collection("user")
-      .find(queryObj)
-      .sort({ _id: -1 })
-      .limit(pageSize)
-      .skip((page - 1) * pageSize)
-      .toArray();
-  } finally {
-    client.close();
-  }
-}
-
-async function getUsersCount(query) {
-  console.log("getUsersCount", query);
-
-  const client = new MongoClient(uri);
-
-  try {
-    await client.connect();
-
-    const queryObj = {
-      $or: [
-        { firstName: { $regex: `^${query}`, $options: "i" } },
-        { lastName: { $regex: `^${query}`, $options: "i" } },
-        { email: { $regex: `^${query}`, $options: "i" } },
-      ],
-    };
-
-    return await client.db(DB_NAME).collection("user").find(queryObj).count();
-  } finally {
-    client.close();
-  }
-}
-
-async function deleteUserByID(user_id) {
-  console.log("deleteUserByID", user_id);
-
-  const client = new MongoClient(uri);
-
-  try {
-    await client.connect();
-
-    const queryObj = {
-      _id: new ObjectId(user_id),
-    };
-
-    return await client.db(DB_NAME).collection("user").remove(queryObj);
-  } finally {
-    client.close();
-  }
-}
-
-async function insertUser(user) {
-  console.log("insertUser", user);
-  const client = new MongoClient(uri);
-
-  try {
-    await client.connect();
-
-    return await client.db(DB_NAME).collection("user").insertOne({
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-    });
-  } finally {
-    client.close();
-  }
-}
-
 module.exports.getTasks = getTasks;
 module.exports.getTasksCount = getTasksCount;
 module.exports.insertTask = insertTask;
@@ -409,10 +323,6 @@ module.exports.addTagIDToTaskID = addTagIDToTaskID;
 module.exports.removeTagIDFromTaskID = removeTagIDFromTaskID;
 module.exports.getTags = getTags;
 module.exports.getTagsCount = getTagsCount;
-module.exports.getUsers = getUsers;
-module.exports.getUsersCount = getUsersCount;
-module.exports.deleteUserByID = deleteUserByID;
-module.exports.insertUser = insertUser;
 module.exports.deleteTagByID = deleteTagByID;
 module.exports.insertTag = insertTag;
 module.exports.finishTaskByID = finishTaskByID;

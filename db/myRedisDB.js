@@ -113,23 +113,23 @@ async function updateUser(userID, user) {
 
     console.log(
       "updateUser",
-      firstName,
-      lastName,
-      email,
-      numberOfAccomplishedTask
+      user.firstName,
+      user.lastName,
+      user.email,
+      user.numberOfAccomplishedTask
     );
 
     const key = `user:${userID}`;
 
     await rclient.hSet(key, {
       id: userID,
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
     });
 
     await rclient.ZADD("users", {
-      score: `${numberOfAccomplishedTask}`,
+      score: `${user.numberOfAccomplishedTask}`,
       value: key,
     });
   } finally {
