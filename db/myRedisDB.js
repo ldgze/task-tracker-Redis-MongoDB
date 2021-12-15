@@ -15,10 +15,8 @@ async function getUser(userId) {
     rclient = await getRConnection();
 
     const user = await rclient.hGetAll(`${userId}`);
-    user.numberOfAccomplishedTask = await rclient.ZSCORE(
-      "users",
-      `user:${userId}`
-    );
+    const numberOfAccomplishedTask = await rclient.ZSCORE("users", `${userId}`);
+    user.numberOfAccomplishedTask = numberOfAccomplishedTask;
 
     return user;
   } finally {
