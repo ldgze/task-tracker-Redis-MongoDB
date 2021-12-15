@@ -223,6 +223,18 @@ router.get("/users", async (req, res, next) => {
   }
 });
 
+router.get("/lists", async (req, res, next) => {
+  try {
+    let lists = await redisDb.getLists();
+    console.log({ lists });
+    res.render("./pages/lists", {
+      lists,
+    });
+  } catch (err) {
+    next(err);
+  }
+});
+
 router.get("/users/:user_id/delete", async (req, res, next) => {
   const user_id = req.params.user_id;
   try {
@@ -233,22 +245,22 @@ router.get("/users/:user_id/delete", async (req, res, next) => {
   }
 });
 
-router.post("/users/:userID/edit", async (req, res, next) => {
+router.get("/lists/:list_id/delete", async (req, res, next) => {
+  const list_id = req.params.list_id;
+  try {
+    await redisDb.deleteListByID(list_id);
+    res.redirect("/lists");
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.post("/users/:user_id/edit", async (req, res, next) => {
   const user = req.body;
-  const userID = req.params.userID;
-  const firstName = req.params.firstName;
-  const lastName = req.params.lastName;
-  const email = req.params.email;
-  const numberOfAccomplishedTask = req.params.numberOfAccomplishedTask;
+  const user_id = req.params.user_id;
 
   try {
-    const updateUser = await redisDb.updateUser(
-      ID,
-      firstName,
-      lastName,
-      email,
-      numberOfAccomplishedTask
-    );
+    const updateUser = await redisDb.updateUser(user_id, user);
 
     console.log("Inserted", updatedUser);
     res.redirect("/users/?msg=updated");
@@ -277,4 +289,20 @@ router.post("/createUser", async (req, res, next) => {
   }
 });
 
+router.post("/createList", async (req, res, next) => {
+  const list = req.body;
+
+  try {
+    const insertList = await redisDb.insertList(
+      list.listName,
+      list.numberOfViews
+    );
+
+    console.log("Inserted", insertList);
+    res.redirect("/lists/?msg=Inserted");
+  } catch (err) {
+    console.log("Error inserting", err);
+    next(err);
+  }
+});
 module.exports = router;

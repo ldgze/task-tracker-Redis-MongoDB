@@ -24,6 +24,21 @@ async function getUser(userId) {
   }
 }
 
+async function getList(listId) {
+  let rclient;
+  try {
+    rclient = await getRConnection();
+
+    const list = await rclient.hGetAll(`${listId}`);
+    const numberOfViews = await rclient.ZSCORE("lists", `${listId}`);
+    list.numberOfViews = numberOfViews;
+
+    return list;
+  } finally {
+    rclient.quit();
+  }
+}
+
 async function insertUser(
   firstName,
   lastName,
@@ -64,13 +79,33 @@ async function insertUser(
   }
 }
 
-async function updateUser(
-  userID,
-  firstName,
-  lastName,
-  email,
-  numberOfAccomplishedTask
-) {
+async function insertList(listName, numberOfViews) {
+  let rclient;
+
+  try {
+    rclient = await getRConnection();
+
+    const nextId = await rclient.incr("listCount");
+
+    console.log("insertList", listName, numberOfViews);
+
+    const key = `list:${nextId}`;
+
+    await rclient.hSet(key, {
+      id: nextId,
+      listName: listName,
+    });
+
+    await rclient.ZADD("lists", {
+      score: `${numberOfViews}`,
+      value: key,
+    });
+  } finally {
+    rclient.quit();
+  }
+}
+
+async function updateUser(userID, user) {
   let rclient;
 
   try {
@@ -126,6 +161,30 @@ async function getUsers() {
   }
 }
 
+async function getLists() {
+  let rclient;
+  try {
+    rclient = await getRConnection();
+
+    const listIds = await rclient.ZRANGE("lists", "+inf", "-inf", {
+      BY: "SCORE",
+      REV: true,
+    });
+
+    console.log("lists listIds", listIds);
+
+    const lists = [];
+    for (let lId of listIds) {
+      const list = await getList(lId);
+      lists.push(list);
+    }
+
+    return lists;
+  } finally {
+    rclient.quit();
+  }
+}
+
 async function deleteUserByID(userId) {
   let rclient;
 
@@ -140,8 +199,26 @@ async function deleteUserByID(userId) {
   }
 }
 
+async function deleteListByID(listId) {
+  let rclient;
+
+  try {
+    rclient = await getRConnection();
+
+    const key = `list:${listId}`;
+    await rclient.ZREM("lists", key);
+    await rclient.del(key);
+  } finally {
+    rclient.quit();
+  }
+}
+
 module.exports.getUser = getUser;
+module.exports.getList = getList;
 module.exports.insertUser = insertUser;
+module.exports.insertList = insertList;
 module.exports.updateUser = updateUser;
 module.exports.getUsers = getUsers;
+module.exports.getLists = getLists;
 module.exports.deleteUserByID = deleteUserByID;
+module.exports.deleteListByID = deleteListByID;
