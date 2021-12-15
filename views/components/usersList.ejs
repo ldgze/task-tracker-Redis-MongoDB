@@ -1,14 +1,14 @@
-<h2>Users</h2>
+<h2>Users finished the most tasks:</h2>
 <div class="row g-3">
   <% for (let user of users) { %>
 
     <div class="col-4">
       <div class="card p-1">
-        <h5 class="card-title"><%= user.firstName %></h5>
+        <h5 class="card-title"><%="First Name: " + user.firstName %></h5>
         <div class="card-text">
-          <div><%= "lastName: " + user.lastName %></div>
-          <div><%= "email: " + user.email %></div>
-          <div><%= "id: " + user.id %></div>
+          <div><%= "Last Name: " + user.lastName %></div>
+          <div><%= "Email: " + user.email %></div>
+          <div><%= "ID: " + user.id %></div>
           <div><%= "Number of Accomplished Tasks: " + user.numberOfAccomplishedTask %></div>
 
 

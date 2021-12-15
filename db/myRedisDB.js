@@ -91,7 +91,6 @@ async function updateUser(
       firstName: firstName,
       lastName: lastName,
       email: email,
-      //numberOfAccomplishedTask: numberOfAccomplishedTask,
     });
 
     await rclient.ZADD("users", {
@@ -108,7 +107,10 @@ async function getUsers() {
   try {
     rclient = await getRConnection();
 
-    const userIds = await rclient.ZRANGE("users", -5, -1);
+    const userIds = await rclient.ZRANGE("users", "+inf", "-inf", {
+      BY: "SCORE",
+      REV: true,
+    });
 
     console.log("users userIds", userIds);
 

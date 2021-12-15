@@ -233,16 +233,21 @@ router.get("/users/:user_id/delete", async (req, res, next) => {
   }
 });
 
-router.post("/users/:user_id/edit", async (req, res, next) => {
+router.post("/users/:userID/edit", async (req, res, next) => {
   const user = req.body;
+  const userID = req.params.userID;
+  const firstName = req.params.firstName;
+  const lastName = req.params.lastName;
+  const email = req.params.email;
+  const numberOfAccomplishedTask = req.params.numberOfAccomplishedTask;
 
   try {
     const updateUser = await redisDb.updateUser(
-      user.ID,
-      user.firstName,
-      user.lastName,
-      user.email,
-      user.numberOfAccomplishedTask
+      ID,
+      firstName,
+      lastName,
+      email,
+      numberOfAccomplishedTask
     );
 
     console.log("Inserted", updatedUser);
