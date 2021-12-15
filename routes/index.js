@@ -261,7 +261,7 @@ router.post("/createUser", async (req, res, next) => {
       user.firstName,
       user.lastName,
       user.email,
-      user.numberOfAccomplishedTask
+      user.accomplishedTasks
     );
 
     console.log("Inserted", insertUser);

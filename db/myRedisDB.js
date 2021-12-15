@@ -48,11 +48,13 @@ async function insertUser(
       firstName: firstName,
       lastName: lastName,
       email: email,
-      //numberOfAccomplishedTask: numberOfAccomplishedTask,
     });
 
-    await rclient.rPush("users", key);
-    //await rclient.ZADD("users", numberOfAccomplishedTask, key);
+    //await rclient.rPush("userslist", key);
+    await rclient.ZADD("userstest", {
+      score: `${numberOfAccomplishedTask}`,
+      value: key,
+    });
   } finally {
     rclient.quit();
   }
@@ -88,7 +90,10 @@ async function updateUser(
       //numberOfAccomplishedTask: numberOfAccomplishedTask,
     });
 
-    //await rclient.ZADD("users", numberOfAccomplishedTask, key);
+    await rclient.ZADD("userstest", {
+      score: `${numberOfAccomplishedTask}`,
+      value: key,
+    });
   } finally {
     rclient.quit();
   }
@@ -99,7 +104,7 @@ async function getUsers() {
   try {
     rclient = await getRConnection();
 
-    const userIds = await rclient.lRange("users", -5, -1);
+    const userIds = await rclient.ZRANGE("userstest", -5, -1);
 
     console.log("users userIds", userIds);
 
