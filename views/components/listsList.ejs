@@ -1,0 +1,30 @@
+<h2>The most-viewed lists:</h2>
+<div class="row g-3">
+  <% for (let list of lists) { %>
+
+    <div class="col-4">
+      <div class="card p-1">
+        <h5 class="card-title"><%="List Name: " + list.listName %></h5>
+        <div class="card-text">
+          <div><%= "ID: " + list.id %></div>
+          <div><%= "Number of Views: " + list.numberOfViews %></div>
+
+
+          <div>
+            
+            <a class="btn btn-outline-danger" href="<%= '/lists/' + list.id + '/delete' %>">Delete</a>
+          </div>
+
+
+
+          
+        </div>
+      </div>
+    </div>
+
+
+  <% } %>
+
+
+
+</div>

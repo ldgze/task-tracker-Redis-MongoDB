@@ -8,12 +8,17 @@
     <div class="container">
       <h1>Task Tracker</h1>
 
+
+
+
+
+
       <div class="row">
         <div class="col-8">
-          <%- include("../components/usersList.ejs", { users }) %>
+          <%- include("../components/listsList.ejs", { lists, }) %>
         </div>
         <div class="col-4">
-          <%- include("../components/formCreateUser.ejs") %>
+          <%- include("../components/formCreatelist.ejs") %>
         </div>
       </div>
 
